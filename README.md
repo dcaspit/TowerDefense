@@ -1,3 +1,12 @@
+## New Idea 
+ - We have a base with the main building in the middle
+ - We have workers that produce woods (they are doing automation work to get wood resource)
+ - We also have gold resource (killing enemies?)
+ - Waves of enemies comes each night to kill the base
+ - In day light we build/upgrade and generate resources
+ - We have main character that we can control and kills enemies? 
+ - Game ends when the base gets to level 10? go with soldiers to the enemy's base and kill him? 
+
 ## General Tasks
 - [x] See Grid of map
 - [x] Place towers across the map

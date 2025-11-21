@@ -6,7 +6,8 @@ export const TexturesTypes = {
   tower: 'tower',
   slime: 'slime',
   grass: 'grass',
-  tree: 'tree'
+  tree: 'tree',
+  base: 'base'
 } as const;
 
 export class Textures {
@@ -19,6 +20,8 @@ export class Textures {
     this.map.set(TexturesTypes.slime, r.LoadTexture('assets/MiniWorldSprites/Characters/Monsters/Slimes/Slime.png'));
     this.map.set(TexturesTypes.grass, r.LoadTexture('assets/MiniWorldSprites/Ground/Grass.png'));
     this.map.set(TexturesTypes.tree, r.LoadTexture('assets/MiniWorldSprites/Nature/Trees.png'));
+    this.map.set(TexturesTypes.base, r.LoadTexture('assets/MiniWorldSprites/ColoredBuildingsPreview.png'));
+
   }
 
   static asset(name: string): r.Texture {
