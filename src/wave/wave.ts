@@ -58,6 +58,7 @@ export class Wave {
     this.lastSpawnTime = currentSecond;
 
     if (this.enemiesSpawned >= this.wave.enemiesPerWave) {
+      console.log('waiting');
       this.waveState = 'waiting';
     }
   }
