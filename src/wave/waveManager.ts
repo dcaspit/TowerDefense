@@ -44,9 +44,12 @@ export default class WaveManager {
       this.onGameOver();
     } else {
       this.waveCount++;
-      this.wave = new Wave(waves[this.waveCount])
     }
     this.onWaveComplete();
+  }
+
+  startWave() {
+    this.wave = new Wave(waves[this.waveCount]);
   }
 
   waveNumber(): number {

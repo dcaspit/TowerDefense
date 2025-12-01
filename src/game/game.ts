@@ -41,6 +41,8 @@ export class Game {
     this.pause = !this.pause;
     if (this.pause) {
       this.projectiles = [];
+    } else {
+      this.waveMgr.startWave();
     }
   };
 

@@ -6,8 +6,8 @@ import { Money } from "../utils/money";
 import { TOWER_COST } from "../towers/tower";
 import { Textures, TexturesTypes } from "../utils/textures";
 
-export const boxWidth = 50;
-export const boxHeight = 50;
+export const boxWidth = (screenWidth - 150) / main_map[0].length;
+export const boxHeight = (screenHeight - 80) / main_map.length;
 export const topMargin = 80;
 
 export default class GameMap {
@@ -76,15 +76,6 @@ export default class GameMap {
             }
           }
         }
-        if (pauseState) {
-          r.DrawRectangleLines(
-            col * boxWidth,
-            topMargin + row * boxHeight,
-            boxWidth,
-            boxHeight,
-            r.BLACK,
-          );
-        }
       }
     }
 
@@ -100,8 +91,8 @@ export default class GameMap {
     const dest = {
       x: pos.x,
       y: pos.y,
-      width: 50,
-      height: 50,
+      width: boxWidth,
+      height: boxHeight,
     };
     const src = {
       x: x,
@@ -117,8 +108,8 @@ export default class GameMap {
     const dest = {
       x: pos.x,
       y: pos.y,
-      width: 50,
-      height: 50,
+      width: boxWidth,
+      height: boxHeight,
     };
     const src = {
       x: x,

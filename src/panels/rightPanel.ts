@@ -1,13 +1,15 @@
 import r from "raylib";
+import { main_map } from "../map/maps";
+import { screenHeight, screenWidth } from "../utils/consts";
 
 export class RightPanel {
-  position: r.Vector2 = { x: 1750, y: 0 }; // Position for 1920x1080 (1920 - 150)
-  gameBtn: r.Vector2 = { x: 1800, y: 80 }; // Adjusted for new resolution
+  position: r.Vector2 = { x: screenWidth - 150, y: 0 }; // Position for 1920x1080 (1920 - 150)
+  gameBtn: r.Vector2 = { x: screenWidth - 150 + 20, y: 80 }; // Adjusted for new resolution
 
   constructor(private onClick: () => void) { }
 
   draw(paused: boolean) {
-    r.DrawRectangle(this.position.x, this.position.y, 170, 1080, r.DARKBROWN); // Full height for 1080px screen
+    r.DrawRectangle(this.position.x, this.position.y, 170, screenHeight, r.DARKBROWN); // Full height for 1080px screen
     this.drawGameBtn(paused);
     this.handleGameBtnClick();
   }

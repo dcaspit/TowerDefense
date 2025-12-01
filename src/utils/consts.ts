@@ -1,2 +1,2 @@
-export const screenWidth: number = 1920;
-export const screenHeight: number = 1080;
+export const screenWidth: number = 970;
+export const screenHeight: number = 540;

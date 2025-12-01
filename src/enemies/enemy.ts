@@ -2,11 +2,12 @@ import r from "raylib";
 import HealthBar from './healthBar';
 import { Textures, TexturesTypes } from "../utils/textures";
 import { GameClock } from "../utils/game-clock";
+import { boxWidth } from "../map/gameMap";
 
 export default class Enemy {
   pos: r.Vector2 = { x: 0, y: 0 };
   healthBar: HealthBar;
-  size = 40;
+  size = boxWidth * 0.8;
   texture: r.Texture;
   health = 30;
   currentPathIndex: number = 0;

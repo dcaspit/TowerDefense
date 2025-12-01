@@ -8,7 +8,7 @@ import { Money } from './utils/money';
 
 function main() {
   r.InitWindow(screenWidth, screenHeight, "Tower Defense");
-  r.ToggleFullscreen();
+  //  r.ToggleFullscreen();
   r.SetTargetFPS(60);
 
   Textures.load();
