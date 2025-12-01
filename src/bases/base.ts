@@ -27,8 +27,8 @@ export default class Base {
     const dest = {
       x: position.x,
       y: position.y,
-      width: 50,
-      height: 50,
+      width: boxWidth,
+      height: boxHeight,
     };
     const src = {
       x: 0,

@@ -1,10 +1,11 @@
 import r from 'raylib';
+import { boxWidth } from '../map/gameMap';
 
 export default class HealthBar {
   position: r.Vector2 = { x: 0, y: 0 };
-  width = 45;
+  width = boxWidth * 0.9;
 
-  constructor(private maxHealth: number) {}
+  constructor(private maxHealth: number) { }
 
   draw(newPos: r.Vector2, currHealth: number) {
     this.position.x = newPos.x + 2.5;
