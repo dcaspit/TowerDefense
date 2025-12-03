@@ -1,11 +1,10 @@
 ## New Idea 
- - We have a base with the main building in the middle
- - We have workers that produce woods (they are doing automation work to get wood resource)
- - We also have gold resource (killing enemies?)
- - Waves of enemies comes each night to kill the base
- - In day light we build/upgrade and generate resources
- - We have main character that we can control and kills enemies? 
- - Game ends when the base gets to level 10? go with soldiers to the enemy's base and kill him? 
+ - Main Character which u can control with W/A/S/D buttons
+ - The character will gather resources from enemies death and map resources
+ - Each round will change the paths to the castle
+ - Main Goal is to survive and advance the base. 
+ - You can improve defense and attack.
+ - Insparation: 'Inside Job' at itch.io and the Mobile game Peleg showed me that has alot of marketing on social media 
 
 ## General Tasks
 - [x] See Grid of map
