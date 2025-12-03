@@ -1,5 +1,6 @@
 import r from 'raylib';
 import { screenHeight, screenWidth } from '../utils/consts';
+import { TopPanel } from '../panels/topPanel';
 
 
 export class Player {
@@ -12,6 +13,8 @@ export class Player {
 
   update(pos: r.Vector2) {
     this.position.x += pos.x;
-    this.position.y += pos.y;
+    if (this.position.y + pos.y >= 80) {
+      this.position.y += pos.y;
+    }
   }
 }
