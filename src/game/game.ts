@@ -10,6 +10,7 @@ import { GameClock } from "../utils/game-clock";
 import { Projectile } from "../towers/projectile";
 import { Textures } from "../utils/textures";
 import { Money } from "../utils/money";
+import { Player } from "../player/Player";
 
 export class Game {
   private pause = true;
@@ -18,6 +19,7 @@ export class Game {
   private map: GameMap;
   private waveMgr: WaveManager;
   private projectiles: Projectile[] = [];
+  private player: Player = new Player();
 
   private addTower = (pos: r.Vector2) => {
     this.towers.push(new Tower(pos.x, pos.y));
@@ -60,6 +62,18 @@ export class Game {
     if (this.waveRunning()) {
       this.updateWave();
     }
+    if (r.IsKeyDown(r.KEY_W)) {
+      this.player.update({ x: 0, y: -2 });
+    }
+    if (r.IsKeyDown(r.KEY_S)) {
+      this.player.update({ x: 0, y: 2 });
+    }
+    if (r.IsKeyDown(r.KEY_A)) {
+      this.player.update({ x: -2, y: 0 });
+    }
+    if (r.IsKeyDown(r.KEY_D)) {
+      this.player.update({ x: 2, y: 0 });
+    }
     GameClock.endTick();
   }
 
@@ -91,6 +105,7 @@ export class Game {
 
     this.rightPanel.draw(this.pause);
     this.topPanel.draw(this.waveMgr.waveNumber(), this.waveMgr.wave);
+    this.player.draw();
   }
 
   private drawWave() {
