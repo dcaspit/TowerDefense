@@ -12,6 +12,8 @@ export class Player {
   frameHeight: number = 0;
   frameRec: r.Rectangle = { x: 0, y: 0, height: 0, width: 0 }
 
+  state: 'nonAttack' | 'attack' = 'nonAttack';
+
   constructor() {
     this.texture = Textures.asset(TexturesTypes.player);
 
@@ -34,6 +36,7 @@ export class Player {
       this.frameCounter = 0;
       if (this.currentFrame > 4) {
         this.currentFrame = 0;
+        this.state = 'nonAttack';
       }
     }
 
@@ -43,7 +46,7 @@ export class Player {
     if (this.direction === 'left') this.offset = 3;
 
     let still = 1;
-    if (this.direction === 'still') still = 0;
+    if (this.direction === 'still' && this.state === 'nonAttack') still = 0;
 
     const dest = {
       x: this.position.x,
@@ -51,9 +54,10 @@ export class Player {
       width: 20,
       height: 20,
     };
+    const att = this.state === 'attack' ? 4 : 0;
     const src = {
       x: still * this.currentFrame * this.frameWidth,
-      y: this.offset * this.frameHeight,
+      y: (this.offset + att) * this.frameHeight,
       width: this.frameWidth,
       height: this.frameHeight,
     };
@@ -72,5 +76,10 @@ export class Player {
     if (pos.y === 0 && pos.x > 0) this.direction = 'right';
     if (pos.y === 0 && pos.x < 0) this.direction = 'left';
     if (pos.y === 0 && pos.x === 0) this.direction = 'still';
+  }
+
+  attack() {
+    this.state = 'attack';
+    this.currentFrame = 0;
   }
 }

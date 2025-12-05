@@ -74,6 +74,9 @@ export class Game {
     else if (r.IsKeyDown(r.KEY_D)) {
       this.player.update({ x: 2, y: 0 });
     }
+    else if (r.IsKeyPressed(r.KEY_RIGHT_CONTROL)) {
+      this.player.attack();
+    }
     else {
       this.player.update({ x: 0, y: 0 });
     }
