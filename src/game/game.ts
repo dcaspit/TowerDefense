@@ -65,14 +65,20 @@ export class Game {
     if (r.IsKeyDown(r.KEY_W)) {
       this.player.update({ x: 0, y: -2 });
     }
-    if (r.IsKeyDown(r.KEY_S)) {
+    else if (r.IsKeyDown(r.KEY_S)) {
       this.player.update({ x: 0, y: 2 });
     }
-    if (r.IsKeyDown(r.KEY_A)) {
+    else if (r.IsKeyDown(r.KEY_A)) {
       this.player.update({ x: -2, y: 0 });
     }
-    if (r.IsKeyDown(r.KEY_D)) {
+    else if (r.IsKeyDown(r.KEY_D)) {
       this.player.update({ x: 2, y: 0 });
+    }
+    else if (r.IsKeyPressed(r.KEY_RIGHT_CONTROL)) {
+      this.player.attack();
+    }
+    else {
+      this.player.update({ x: 0, y: 0 });
     }
     GameClock.endTick();
   }
@@ -105,7 +111,7 @@ export class Game {
 
     this.rightPanel.draw(this.pause);
     this.topPanel.draw(this.waveMgr.waveNumber(), this.waveMgr.wave);
-    this.player.draw();
+    this.player.drawEnemyTexture();
   }
 
   private drawWave() {
