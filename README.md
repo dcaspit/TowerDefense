@@ -1,5 +1,5 @@
 ## New Idea 
- - Main Character which u can control with W/A/S/D buttons
+ - [x] Main Character which u can control with W/A/S/D buttons
  - The character will gather resources from enemies death and map resources
  - Each round will change the paths to the castle
  - Main Goal is to survive and advance the base. 
