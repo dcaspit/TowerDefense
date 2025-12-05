@@ -63,22 +63,40 @@ export class Game {
       this.updateWave();
     }
     if (r.IsKeyDown(r.KEY_W)) {
-      this.player.update({ x: 0, y: -2 });
+      this.player.update({ x: 0, y: -2 }, () => { });
     }
     else if (r.IsKeyDown(r.KEY_S)) {
-      this.player.update({ x: 0, y: 2 });
+      this.player.update({ x: 0, y: 2 }, () => { });
     }
     else if (r.IsKeyDown(r.KEY_A)) {
-      this.player.update({ x: -2, y: 0 });
+      this.player.update({ x: -2, y: 0 }, () => { });
     }
     else if (r.IsKeyDown(r.KEY_D)) {
-      this.player.update({ x: 2, y: 0 });
+      this.player.update({ x: 2, y: 0 }, () => { });
     }
     else if (r.IsKeyPressed(r.KEY_RIGHT_CONTROL)) {
-      this.player.attack();
+      this.player.update({ x: 0, y: 0 }, () => {
+        const enemies = this.waveMgr.enemies();
+        console.log(`player pos: ${this.player.position}`);
+        enemies.forEach((enemy, index) => {
+          console.log(`enemy pos: ${enemy.pos}`);
+          // Find closest enemy within range
+          let closestDistance = 10; // Tower range
+          const towerCenterX = this.player.position.x + 20 / 2;
+          const towerCenterY = this.player.position.y + 20 / 2;
+
+          const dx = enemy.pos.x + enemy.size / 2 - towerCenterX;
+          const dy = enemy.pos.y + enemy.size / 2 - towerCenterY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance <= 10) {
+            enemy.takeDamage(5);
+          }
+        });
+      }, true);
     }
     else {
-      this.player.update({ x: 0, y: 0 });
+      this.player.update({ x: 0, y: 0 }, () => { });
     }
     GameClock.endTick();
   }

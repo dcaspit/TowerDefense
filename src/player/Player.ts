@@ -2,6 +2,7 @@ import r from 'raylib';
 import { screenHeight, screenWidth } from '../utils/consts';
 import { TopPanel } from '../panels/topPanel';
 import { Textures, TexturesTypes } from '../utils/textures';
+import Enemy from '../enemies/enemy';
 
 
 export class Player {
@@ -29,17 +30,6 @@ export class Player {
   offset = 0;
 
   drawEnemyTexture() {
-
-    this.frameCounter += r.GetFrameTime() * 10;
-    if (this.frameCounter >= 1) {
-      this.currentFrame++;
-      this.frameCounter = 0;
-      if (this.currentFrame > 4) {
-        this.currentFrame = 0;
-        this.state = 'nonAttack';
-      }
-    }
-
     if (this.direction === 'down') this.offset = 0;
     if (this.direction === 'up') this.offset = 1;
     if (this.direction === 'right') this.offset = 2;
@@ -65,7 +55,7 @@ export class Player {
     r.DrawTexturePro(this.texture, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
   }
 
-  update(pos: r.Vector2) {
+  update(pos: r.Vector2, tryToAttack: () => void, attack = false) {
     this.position.x += pos.x;
     if (this.position.y + pos.y >= 80) {
       this.position.y += pos.y;
@@ -76,10 +66,25 @@ export class Player {
     if (pos.y === 0 && pos.x > 0) this.direction = 'right';
     if (pos.y === 0 && pos.x < 0) this.direction = 'left';
     if (pos.y === 0 && pos.x === 0) this.direction = 'still';
-  }
 
-  attack() {
-    this.state = 'attack';
-    this.currentFrame = 0;
+    if (attack) {
+      this.state = 'attack';
+      this.currentFrame = 0;
+    }
+
+    this.frameCounter += r.GetFrameTime() * 10;
+    if (this.frameCounter >= 1) {
+      this.currentFrame++;
+      this.frameCounter = 0;
+      if (this.currentFrame > 4) {
+        this.currentFrame = 0;
+        if (this.state === 'attack') {
+          console.log('trying to attack');
+          tryToAttack();
+          this.state = 'nonAttack';
+        }
+      }
+    }
+
   }
 }
