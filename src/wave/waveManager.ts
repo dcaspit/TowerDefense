@@ -39,7 +39,6 @@ export default class WaveManager {
   }
 
   onWaveCompleted() {
-    console.log('wave count: ', this.waveCount, ' waves.length: ', waves.length);
     if (this.waveCount + 1 === waves.length) {
       this.onGameOver();
     } else {

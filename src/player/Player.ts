@@ -89,7 +89,6 @@ export class Player {
       if (this.currentFrame > 4) {
         this.currentFrame = 0;
         if (this.state === 'attack') {
-          console.log('trying to attack');
           this.state = 'nonAttack';
           return true;
         }
