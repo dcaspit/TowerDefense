@@ -55,7 +55,7 @@ export class Player {
     r.DrawTexturePro(this.texture, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
   }
 
-  update(pos: r.Vector2, tryToAttack: () => void, attack = false) {
+  update(pos: r.Vector2, attack = false): boolean {
     this.position.x += pos.x;
     if (this.position.y + pos.y >= 80) {
       this.position.y += pos.y;
@@ -80,11 +80,12 @@ export class Player {
         this.currentFrame = 0;
         if (this.state === 'attack') {
           console.log('trying to attack');
-          tryToAttack();
           this.state = 'nonAttack';
+          return true;
         }
       }
     }
 
+    return false;
   }
 }
