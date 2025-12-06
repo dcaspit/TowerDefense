@@ -3,6 +3,9 @@ import Enemy from "../enemies/enemy";
 import { Projectile } from "./projectile";
 import { Textures, TexturesTypes } from "../utils/textures";
 import { GameClock } from "../utils/game-clock";
+import { screenWidth } from "../utils/consts";
+import { main_map } from "../map/maps";
+import { boxHeight, boxWidth } from "../map/gameMap";
 
 export const TOWER_COST = 60;
 
@@ -13,7 +16,6 @@ export class Tower {
   state: "idle" | "shooting" = "idle";
   countState: boolean = false;
   towerTexture: r.Texture;
-  towerSize = 50;
 
   constructor(x: number, y: number) {
     this.position.x = x;
@@ -30,8 +32,8 @@ export class Tower {
     const dest = {
       x: this.position.x,
       y: this.position.y,
-      width: this.towerSize,
-      height: this.towerSize,
+      width: boxWidth,
+      height: boxHeight,
     };
     const src = {
       x: 0,
@@ -44,9 +46,9 @@ export class Tower {
 
   drawTowerCircle() {
     r.DrawCircleLines(
-      this.position.x + this.towerSize / 2,
-      this.position.y + this.towerSize / 2,
-      100,
+      this.position.x + boxWidth / 2,
+      this.position.y + boxHeight / 2,
+      50,
       r.ORANGE,
     );
   }
@@ -58,16 +60,16 @@ export class Tower {
     const projectiles: Projectile[] = [];
     // Find closest enemy within range
     let closestEnemy: Enemy | null = null;
-    let closestDistance = 100; // Tower range
-    const towerCenterX = this.position.x + this.towerSize / 2;
-    const towerCenterY = this.position.y + this.towerSize / 2;
+    let closestDistance = 50; // Tower range
+    const towerCenterX = this.position.x + boxWidth / 2;
+    const towerCenterY = this.position.y + boxHeight / 2;
 
     for (const enemy of enemies) {
       const dx = enemy.pos.x + enemy.size / 2 - towerCenterX;
       const dy = enemy.pos.y + enemy.size / 2 - towerCenterY;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance <= 100 && distance < closestDistance) {
+      if (distance <= 50 && distance < closestDistance) {
         closestEnemy = enemy;
         closestDistance = distance;
       }
