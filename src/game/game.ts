@@ -92,7 +92,7 @@ export class Game {
     enemies.forEach((enemy, index) => {
       console.log(`enemy pos -> x: ${enemy.pos.x}, y: ${enemy.pos.y}`);
       // Find closest enemy within range
-      let closestDistance = 10; // Tower range
+      let closestDistance = 25; // Tower range
       const towerCenterX = this.player.position.x + 20 / 2;
       const towerCenterY = this.player.position.y + 20 / 2;
 
@@ -100,7 +100,7 @@ export class Game {
       const dy = enemy.pos.y + enemy.size / 2 - towerCenterY;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance <= 10) {
+      if (distance <= 25) {
         enemy.takeDamage(5);
       }
     });

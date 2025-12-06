@@ -53,6 +53,16 @@ export class Player {
     };
 
     r.DrawTexturePro(this.texture, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
+    this.drawTowerCircle();
+  }
+
+  drawTowerCircle() {
+    r.DrawCircleLines(
+      this.position.x + 20 / 2,
+      this.position.y + 20 / 2,
+      25,
+      r.ORANGE,
+    );
   }
 
   update(pos: r.Vector2, attack = false): boolean {
