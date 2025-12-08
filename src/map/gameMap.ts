@@ -24,6 +24,10 @@ export default class GameMap {
   treeWidth: number;
   treeHeight: number;
 
+  wall: r.Texture;
+  wallWidth: number;
+  wallHeight: number;
+
   constructor(private mouseClick: (pos: r.Vector2) => void,
     private onBaseDeath: () => void) {
     this.enemyPath = [];
@@ -37,6 +41,10 @@ export default class GameMap {
     this.tree = Textures.asset(TexturesTypes.tree);
     this.treeWidth = this.tree.width / 4;
     this.treeHeight = this.tree.height;
+
+    this.wall = Textures.asset(TexturesTypes.wall);
+    this.wallWidth = this.wall.width / 3;
+    this.wallHeight = this.wall.height / 6;
   }
 
   drawMap(pauseState: boolean) {
@@ -53,6 +61,9 @@ export default class GameMap {
         } else if (main_map[row][col] === 4) {
           this.drawGround(col, row, this.grassWidth * 2);
           this.drawTree(col, row, this.treeWidth);
+        } else if (main_map[row][col] === 5) {
+          this.drawGround(col, row, this.grassWidth * 2);
+          this.drawWall(col, row, 0, this.wallHeight * 2);
         }
 
         // TODO: add remove tower logic
@@ -118,6 +129,23 @@ export default class GameMap {
       height: this.treeHeight,
     };
     r.DrawTexturePro(this.tree, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
+  }
+
+  drawWall(col: number, row: number, x: number, y: number) {
+    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight }
+    const dest = {
+      x: pos.x,
+      y: pos.y,
+      width: boxWidth,
+      height: boxHeight,
+    };
+    const src = {
+      x: x,
+      y: y,
+      width: this.wallWidth,
+      height: this.wallHeight,
+    };
+    r.DrawTexturePro(this.wall, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
   }
 
   isMouseInRec(col: number, row: number): boolean {
