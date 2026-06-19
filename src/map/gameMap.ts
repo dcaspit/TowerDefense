@@ -68,7 +68,7 @@ export default class GameMap {
 
         // TODO: add remove tower logic
         // TODO: remove logic from draw
-        if (color === r.GREEN && pauseState && Money.enough(TOWER_COST) && !this.towersLocations.find((loc) => loc.col === col && loc.row === row)) {
+        if (this.canPlaceTower(color, row, col, pauseState)) {
           // Check if mouse is hovering over this rectangle
           if (this.isMouseInRec(col, row)) {
             // Draw a semi-transparent white overlay for highlight
@@ -95,6 +95,10 @@ export default class GameMap {
       const endPosition = this.enemyPath[this.enemyPath.length - 1];
       this.base.draw(endPosition);
     }
+  }
+
+  canPlaceTower(color: r.Color, row: number, col: number, pauseState: boolean): boolean {
+    return color === r.GREEN && pauseState && Money.enough(TOWER_COST) && !this.towersLocations.find((loc) => loc.col === col && loc.row === row);
   }
 
   drawGround(col: number, row: number, x: number) {

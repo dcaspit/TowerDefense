@@ -1,5 +1,12 @@
 ## New Idea 
  - [x] Main Character which u can control with W/A/S/D buttons
+ - Day and Night game. 
+    - at Day you build, gather resources, and buy at the Shop
+    - at Night you defend base(home)
+        - you can do it automatically by building towers
+        - you can do it manually by fighting the enemies
+        - each night you survive you improve (by perks or getting exp)
+  
  - The character will gather resources from enemies death and map resources
  - Each round will change the paths to the castle
  - Main Goal is to survive and advance the base. 
@@ -13,6 +20,9 @@
 - [x] Base that enemies hit and lower health
 - [ ] Enemy hit base animation
 - [ ] Projectile hit enemy animation
+- [ ] Scale automaticaly the Tower Texture and Circle 
+- [ ] Protagonist should collide with enviroment
+- [ ] Adjust speed of protagonist automatically comparing to screen's size
 
 ### Game Control (right view panel)
 - [x] Start level

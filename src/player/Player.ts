@@ -1,5 +1,6 @@
 import r from 'raylib';
 import { screenHeight, screenWidth } from '../utils/consts';
+import { boxWidth, boxHeight } from '../map/gameMap';
 import { TopPanel } from '../panels/topPanel';
 import { Textures, TexturesTypes } from '../utils/textures';
 import Enemy from '../enemies/enemy';
@@ -18,7 +19,6 @@ export class Player {
   constructor() {
     this.texture = Textures.asset(TexturesTypes.player);
 
-
     this.frameWidth = this.texture.width / 5;
     this.frameHeight = this.texture.height / 8;
     this.frameRec = { x: 0, y: 0, width: this.frameWidth, height: this.frameHeight };
@@ -29,7 +29,7 @@ export class Player {
   direction: 'up' | 'down' | 'left' | 'right' | 'still' = 'still';
   offset = 0;
 
-  drawEnemyTexture() {
+  draw() {
     if (this.direction === 'down') this.offset = 0;
     if (this.direction === 'up') this.offset = 1;
     if (this.direction === 'right') this.offset = 2;
@@ -41,8 +41,8 @@ export class Player {
     const dest = {
       x: this.position.x,
       y: this.position.y,
-      width: 20,
-      height: 20,
+      width: boxWidth,
+      height: boxHeight,
     };
     const att = this.state === 'attack' ? 4 : 0;
     const src = {
@@ -53,14 +53,14 @@ export class Player {
     };
 
     r.DrawTexturePro(this.texture, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
-    this.drawTowerCircle();
+    this.drawPlayerCircle();
   }
 
-  drawTowerCircle() {
+  drawPlayerCircle() {
     r.DrawCircleLines(
-      this.position.x + 20 / 2,
-      this.position.y + 20 / 2,
-      25,
+      this.position.x + boxWidth / 2,
+      this.position.y + boxHeight / 2,
+      Math.sqrt(boxHeight * boxWidth + (boxHeight * boxHeight)) / 2,
       r.ORANGE,
     );
   }

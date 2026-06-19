@@ -2,6 +2,7 @@
 import r from "raylib";
 import GameMap from "../map/gameMap";
 import { screenHeight, screenWidth } from "../utils/consts";
+import { boxHeight, boxWidth } from "../map/gameMap";
 import WaveManager, { waves } from "../wave/waveManager";
 import { Tower } from "../towers/tower";
 import { RightPanel } from "../panels/rightPanel";
@@ -63,17 +64,30 @@ export class Game {
       this.updateWave();
     }
     let attack = false;
+    let distance = (boxWidth) / 10;
     if (r.IsKeyDown(r.KEY_W)) {
-      attack = this.player.update({ x: 0, y: -2 });
+      attack = this.player.update({ x: 0, y: -distance });
+      if (r.IsKeyDown(r.KEY_A)) {
+        attack = this.player.update({ x: -(distance / 2), y: 0 });
+      } 
+      else if (r.IsKeyDown(r.KEY_D)) {
+        attack = this.player.update({ x: (distance / 2), y: 0 });
+      }
     }
     else if (r.IsKeyDown(r.KEY_S)) {
-      attack = this.player.update({ x: 0, y: 2 });
+      attack = this.player.update({ x: 0, y: distance });
+      if (r.IsKeyDown(r.KEY_A)) {
+        attack = this.player.update({ x: -(distance / 2), y: 0 });
+      } 
+      else if (r.IsKeyDown(r.KEY_D)) {
+        attack = this.player.update({ x: (distance / 2), y: 0 });
+      }
     }
     else if (r.IsKeyDown(r.KEY_A)) {
-      attack = this.player.update({ x: -2, y: 0 });
+      attack = this.player.update({ x: -distance, y: 0 });
     }
     else if (r.IsKeyDown(r.KEY_D)) {
-      attack = this.player.update({ x: 2, y: 0 });
+      attack = this.player.update({ x: distance, y: 0 });
     }
     else if (r.IsKeyPressed(r.KEY_RIGHT_CONTROL)) {
       attack = this.player.update({ x: 0, y: 0 }, true);
@@ -132,7 +146,7 @@ export class Game {
 
     this.rightPanel.draw(this.pause);
     this.topPanel.draw(this.waveMgr.waveNumber(), this.waveMgr.wave);
-    this.player.drawEnemyTexture();
+    this.player.draw();
   }
 
   private drawWave() {
