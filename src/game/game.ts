@@ -63,41 +63,59 @@ export class Game {
     if (this.waveRunning()) {
       this.updateWave();
     }
+    this.updateProtagonist();
+    GameClock.endTick();
+  }
+
+  updateProtagonist() {
     let attack = false;
     let distance = (boxWidth) / 10;
+    let addition: r.Vector2 = { x: 0, y: 0};
     if (r.IsKeyDown(r.KEY_W)) {
-      attack = this.player.update({ x: 0, y: -distance });
+      addition = { x: 0, y: -distance };
       if (r.IsKeyDown(r.KEY_A)) {
-        attack = this.player.update({ x: -(distance / 2), y: 0 });
+        addition = { x: -(distance / 2), y: 0 };
       } 
       else if (r.IsKeyDown(r.KEY_D)) {
-        attack = this.player.update({ x: (distance / 2), y: 0 });
+        addition = { x: (distance / 2), y: 0 };
       }
     }
     else if (r.IsKeyDown(r.KEY_S)) {
-      attack = this.player.update({ x: 0, y: distance });
+      addition = { x: 0, y: distance };
       if (r.IsKeyDown(r.KEY_A)) {
-        attack = this.player.update({ x: -(distance / 2), y: 0 });
+        addition ={ x: -(distance / 2), y: 0 };
       } 
       else if (r.IsKeyDown(r.KEY_D)) {
-        attack = this.player.update({ x: (distance / 2), y: 0 });
+        addition ={ x: (distance / 2), y: 0 };
       }
     }
     else if (r.IsKeyDown(r.KEY_A)) {
-      attack = this.player.update({ x: -distance, y: 0 });
+      addition ={ x: -distance, y: 0 } ;
     }
     else if (r.IsKeyDown(r.KEY_D)) {
-      attack = this.player.update({ x: distance, y: 0 });
+      addition = { x: distance, y: 0 };
     }
     else if (r.IsKeyPressed(r.KEY_RIGHT_CONTROL)) {
-      attack = this.player.update({ x: 0, y: 0 }, true);
+      this.player.attack();
+      attack = true; // TODO: Fix the attack mechanisem. i broke it. 22/06/26
     }
-    else {
-      attack = this.player.update({ x: 0, y: 0 });
+    
+    const p: r.Rectangle = {
+      x: this.player.position.x + addition.x,
+      y: this.player.position.y + addition.y,
+      height: boxHeight - 10,
+      width: boxWidth - 10,
     }
 
+    const recs = this.map.cantWalkPassTerrain.filter((rec) => r.CheckCollisionRecs(rec, p));
+    if(recs.length !== 0) {
+      console.log("p: ", p);
+      console.log("recs: ", recs);
+      addition = { x: 0, y: 0 }
+    }
+
+    this.player.update(addition);
     if (attack) this.tryToAttackEnemy();
-    GameClock.endTick();
   }
 
   tryToAttackEnemy() {

@@ -2,9 +2,10 @@ import r from 'raylib';
 import { screenWidth } from '../utils/consts';
 import { Money } from '../utils/money';
 import { Wave } from '../wave/wave';
+import { RIGHT_PANEL_WIDTH } from './rightPanel';
 
 export class TopPanel {
-  bgWidth = screenWidth - 150;
+  bgWidth = screenWidth - RIGHT_PANEL_WIDTH;
   bgHeight = 80; // topMargin
   position: r.Vector2 = { x: 0, y: 0 };
   goldPosition: r.Vector2 = { x: 20, y: 20 };
@@ -21,6 +22,16 @@ export class TopPanel {
     this.drawMoney();
     this.drawWaveCount(waveNumber);
     this.drawEnemiesCount(wave);
+  }
+
+  drawBG() {
+    r.DrawRectangle(
+      this.position.x,
+      this.position.y,
+      this.bgWidth,
+      this.bgHeight,
+      { r: r.BROWN.r, g: r.BROWN.g, b: r.BROWN.b, a: r.BROWN.a - 10 }
+    )
   }
 
   drawEnemiesCount(wave: Wave) {
@@ -64,14 +75,5 @@ export class TopPanel {
     );
   }
 
-  drawBG() {
-    r.DrawRectangle(
-      this.position.x,
-      this.position.y,
-      this.bgWidth,
-      this.bgHeight,
-      { r: r.BROWN.r, g: r.BROWN.g, b: r.BROWN.b, a: r.BROWN.a - 10 }
-    )
-  }
 
 }

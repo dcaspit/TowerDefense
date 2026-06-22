@@ -1,7 +1,7 @@
 import r, { MOUSE_BUTTON_LEFT } from "raylib";
 import { screenHeight, screenWidth } from "../utils/consts";
 import { Ground, main_map } from "./maps";
-import Base from '../bases/base';
+import Base from "../bases/base";
 import { Money } from "../utils/money";
 import { TOWER_COST } from "../towers/tower";
 import { Textures, TexturesTypes } from "../utils/textures";
@@ -13,7 +13,8 @@ export const topMargin = 80;
 export default class GameMap {
   enemyPath: r.Vector2[];
   enemyPathIntialized: boolean = false;
-  towersLocations: { col: number, row: number }[] = [];
+  cantWalkPassTerrain: r.Rectangle[];
+  towersLocations: { col: number; row: number }[] = [];
   base: Base;
 
   grass: r.Texture;
@@ -28,11 +29,15 @@ export default class GameMap {
   wallWidth: number;
   wallHeight: number;
 
-  constructor(private mouseClick: (pos: r.Vector2) => void,
-    private onBaseDeath: () => void) {
+  constructor(
+    private mouseClick: (pos: r.Vector2) => void,
+    private onBaseDeath: () => void,
+  ) {
     this.enemyPath = [];
+    this.cantWalkPassTerrain = [];
     this.base = new Base(this.onBaseDeath);
     this.parseEnemyPath();
+    this.parseCantPassTerrain();
 
     this.grass = Textures.asset(TexturesTypes.grass);
     this.grassWidth = this.grass.width / 5;
@@ -81,7 +86,10 @@ export default class GameMap {
             );
 
             if (r.IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-              this.mouseClick({ x: col * boxWidth, y: topMargin + row * boxHeight });
+              this.mouseClick({
+                x: col * boxWidth,
+                y: topMargin + row * boxHeight,
+              });
               this.towersLocations.push({ col: col, row: row });
               Money.decrease(TOWER_COST);
             }
@@ -97,12 +105,22 @@ export default class GameMap {
     }
   }
 
-  canPlaceTower(color: r.Color, row: number, col: number, pauseState: boolean): boolean {
-    return color === r.GREEN && pauseState && Money.enough(TOWER_COST) && !this.towersLocations.find((loc) => loc.col === col && loc.row === row);
+  canPlaceTower(
+    color: r.Color,
+    row: number,
+    col: number,
+    pauseState: boolean,
+  ): boolean {
+    return (
+      color === r.GREEN &&
+      pauseState &&
+      Money.enough(TOWER_COST) &&
+      !this.towersLocations.find((loc) => loc.col === col && loc.row === row)
+    );
   }
 
   drawGround(col: number, row: number, x: number) {
-    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight }
+    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight };
     const dest = {
       x: pos.x,
       y: pos.y,
@@ -119,7 +137,7 @@ export default class GameMap {
   }
 
   drawTree(col: number, row: number, x: number) {
-    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight }
+    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight };
     const dest = {
       x: pos.x,
       y: pos.y,
@@ -136,7 +154,7 @@ export default class GameMap {
   }
 
   drawWall(col: number, row: number, x: number, y: number) {
-    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight }
+    const pos = { x: col * boxWidth, y: topMargin + row * boxHeight };
     const dest = {
       x: pos.x,
       y: pos.y,
@@ -250,5 +268,20 @@ export default class GameMap {
     }
 
     console.log(`Enemy path parsed with ${this.enemyPath.length} waypoints`);
+  }
+
+  parseCantPassTerrain() {
+    for (let row = 0; row < main_map.length; row++) {
+      for (let col = 0; col < main_map[row].length; col++) {
+        if (main_map[row][col] === Ground.GrassTree) {
+          this.cantWalkPassTerrain.push({
+            x: col * boxWidth,
+            y: topMargin + row * boxHeight,
+            height: boxHeight,
+            width: boxWidth
+          });
+        }
+      }
+    }
   }
 }

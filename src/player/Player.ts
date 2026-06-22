@@ -4,11 +4,12 @@ import { boxWidth, boxHeight } from '../map/gameMap';
 import { TopPanel } from '../panels/topPanel';
 import { Textures, TexturesTypes } from '../utils/textures';
 import Enemy from '../enemies/enemy';
+import { RIGHT_PANEL_WIDTH } from '../panels/rightPanel';
 
 
 export class Player {
   health: number = 10;
-  position: r.Vector2 = { x: screenWidth / 2, y: screenHeight / 2 };
+  position: r.Vector2 = { x: screenWidth / 2, y: screenHeight / 2 + 50};
   texture: r.Texture;
   frameWidth: number = 0;
   frameHeight: number = 0;
@@ -41,8 +42,8 @@ export class Player {
     const dest = {
       x: this.position.x,
       y: this.position.y,
-      width: boxWidth,
-      height: boxHeight,
+      width: boxWidth - 10,
+      height: boxHeight - 10,
     };
     const att = this.state === 'attack' ? 4 : 0;
     const src = {
@@ -65,22 +66,9 @@ export class Player {
     );
   }
 
-  update(pos: r.Vector2, attack = false): boolean {
-    this.position.x += pos.x;
-    if (this.position.y + pos.y >= 80) {
-      this.position.y += pos.y;
-    }
-
-    if (pos.x === 0 && pos.y < 0) this.direction = 'up';
-    if (pos.x === 0 && pos.y > 0) this.direction = 'down';
-    if (pos.y === 0 && pos.x > 0) this.direction = 'right';
-    if (pos.y === 0 && pos.x < 0) this.direction = 'left';
-    if (pos.y === 0 && pos.x === 0) this.direction = 'still';
-
-    if (attack) {
-      this.state = 'attack';
-      this.currentFrame = 0;
-    }
+  attack() {
+    this.state = 'attack';
+    this.currentFrame = 0;
 
     this.frameCounter += r.GetFrameTime() * 10;
     if (this.frameCounter >= 1) {
@@ -94,7 +82,20 @@ export class Player {
         }
       }
     }
+  }
 
-    return false;
+  update(pos: r.Vector2, attack = false) {
+    if(this.position.x + pos.x + boxWidth <= screenWidth - RIGHT_PANEL_WIDTH) {
+      this.position.x += pos.x;
+    }
+    if (this.position.y + pos.y >= 80) {
+      this.position.y += pos.y;
+    }
+
+    if (pos.x === 0 && pos.y < 0) this.direction = 'up';
+    if (pos.x === 0 && pos.y > 0) this.direction = 'down';
+    if (pos.y === 0 && pos.x > 0) this.direction = 'right';
+    if (pos.y === 0 && pos.x < 0) this.direction = 'left';
+    if (pos.y === 0 && pos.x === 0) this.direction = 'still';
   }
 }
