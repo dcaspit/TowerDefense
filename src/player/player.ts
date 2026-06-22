@@ -54,6 +54,7 @@ export class Player {
     };
 
     r.DrawTexturePro(this.texture, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
+//    r.DrawRectangle(this.position.x, this.position.y, boxWidth - 10, boxHeight - 10, r.BLACK);
     this.drawPlayerCircle();
   }
 

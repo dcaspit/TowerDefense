@@ -11,7 +11,7 @@ import { GameClock } from "../utils/game-clock";
 import { Projectile } from "../towers/projectile";
 import { Textures } from "../utils/textures";
 import { Money } from "../utils/money";
-import { Player } from "../player/Player";
+import { Player } from "../player/player";
 
 export class Game {
   private pause = true;
@@ -69,31 +69,31 @@ export class Game {
 
   updateProtagonist() {
     let attack = false;
-    let distance = (boxWidth) / 10;
+    let distance = (boxWidth) / 20;
     let addition: r.Vector2 = { x: 0, y: 0};
     if (r.IsKeyDown(r.KEY_W)) {
-      addition = { x: 0, y: -distance };
+      addition.y = -distance;
       if (r.IsKeyDown(r.KEY_A)) {
-        addition = { x: -(distance / 2), y: 0 };
+        addition.x = -(distance / 2);
       } 
       else if (r.IsKeyDown(r.KEY_D)) {
-        addition = { x: (distance / 2), y: 0 };
+        addition.x = distance / 2;
       }
     }
     else if (r.IsKeyDown(r.KEY_S)) {
-      addition = { x: 0, y: distance };
+      addition.y = distance;
       if (r.IsKeyDown(r.KEY_A)) {
-        addition ={ x: -(distance / 2), y: 0 };
+        addition.x = -(distance / 2);
       } 
       else if (r.IsKeyDown(r.KEY_D)) {
-        addition ={ x: (distance / 2), y: 0 };
+        addition.x = distance / 2;
       }
     }
     else if (r.IsKeyDown(r.KEY_A)) {
-      addition ={ x: -distance, y: 0 } ;
+        addition.x = -distance;
     }
     else if (r.IsKeyDown(r.KEY_D)) {
-      addition = { x: distance, y: 0 };
+        addition.x = distance;
     }
     else if (r.IsKeyPressed(r.KEY_RIGHT_CONTROL)) {
       this.player.attack();

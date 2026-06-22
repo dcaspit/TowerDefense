@@ -141,8 +141,8 @@ export default class GameMap {
     const dest = {
       x: pos.x,
       y: pos.y,
-      width: boxWidth,
-      height: boxHeight,
+      width: boxWidth - 10,
+      height: boxHeight - 10,
     };
     const src = {
       x: x,
@@ -151,6 +151,7 @@ export default class GameMap {
       height: this.treeHeight,
     };
     r.DrawTexturePro(this.tree, src, dest, { x: 0, y: 0 }, 0, r.WHITE);
+    //r.DrawRectangle(pos.x, pos.y, boxWidth- 10, boxHeight - 10, r.RED);
   }
 
   drawWall(col: number, row: number, x: number, y: number) {
@@ -277,8 +278,8 @@ export default class GameMap {
           this.cantWalkPassTerrain.push({
             x: col * boxWidth,
             y: topMargin + row * boxHeight,
-            height: boxHeight,
-            width: boxWidth
+            height: boxHeight - 10,
+            width: boxWidth - 10
           });
         }
       }
